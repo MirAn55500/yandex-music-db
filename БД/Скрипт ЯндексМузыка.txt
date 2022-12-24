@@ -1,0 +1,298 @@
+CREATE TABLE "Track" (
+	"track_id" serial,
+	"url" VARCHAR(255),
+	"title" VARCHAR(255) NOT NULL,
+	"duration" TIME NOT NULL,
+	"isExplicit" BOOLEAN NOT NULL,
+	"coverUrl" VARCHAR(255) NOT NULL,
+	"lyrics" TEXT NOT NULL,
+	CONSTRAINT "Track_pk" PRIMARY KEY ("track_id")
+);
+
+CREATE TABLE "Album" (
+	"album_id" serial,
+	"year" integer,
+	"coverUrl" VARCHAR(255),
+	"title" VARCHAR(255) NOT NULL,
+	"type" VARCHAR(255) NOT NULL,
+	"isExplicit" BOOLEAN NOT NULL,
+	CONSTRAINT "Album_pk" PRIMARY KEY ("album_id")
+);
+
+
+
+CREATE TABLE "User" (
+	"user_id" serial,
+	"name" VARCHAR(255),
+	"iconUrl" VARCHAR(255) NOT NULL,
+	"hasPremium" BOOLEAN NOT NULL,
+	CONSTRAINT "User_pk" PRIMARY KEY ("user_id")
+) ;
+
+
+
+CREATE TABLE "Playlist" (
+	"playlist_id" serial NOT NULL,
+	"coverUrl" VARCHAR(255) NOT NULL,
+	"title" VARCHAR(255) NOT NULL,
+	"type" VARCHAR(255) NOT NULL,
+	"user_id" integer NOT NULL,
+	CONSTRAINT "Playlist_pk" PRIMARY KEY ("playlist_id")
+);
+
+
+CREATE TABLE "Tag" (
+	"tag_id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	CONSTRAINT "Tag_pk" PRIMARY KEY ("tag_id")
+);
+
+
+
+CREATE TABLE "Artist" (
+	"artist_id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	"info" serial NOT NULL,
+	"coverUrl" VARCHAR(255) NOT NULL,
+	CONSTRAINT "Artist_pk" PRIMARY KEY ("artist_id")
+);
+
+
+
+CREATE TABLE "Genre" (
+	"genre_id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	CONSTRAINT "Genre_pk" PRIMARY KEY ("genre_id")
+);
+
+
+
+CREATE TABLE "Link" (
+	"link_id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	"url" VARCHAR(255) NOT NULL,
+	"artist_id" serial NOT NULL,
+	CONSTRAINT "Link_pk" PRIMARY KEY ("link_id")
+);
+
+CREATE TABLE "Album-Track" (
+	"album_track_id" serial NOT NULL,
+	"album_id" serial NOT NULL,
+	"track_id" serial NOT NULL,
+	CONSTRAINT "Album-Track_pk" PRIMARY KEY ("album_track_id")
+);
+
+CREATE TABLE "Album-User" (
+	"album_user_id" serial NOT NULL,
+	"user_id" serial NOT NULL,
+	"album_id" serial NOT NULL,
+	CONSTRAINT "Album-User_pk" PRIMARY KEY ("album_user_id")
+);
+
+CREATE TABLE "Genre-Track" (
+	"genre_track_id" serial NOT NULL,
+	"genre_id" serial NOT NULL,
+	"track_id" serial NOT NULL,
+	CONSTRAINT "Genre-Track_pk" PRIMARY KEY ("genre_track_id")
+);
+
+CREATE TABLE "Genre-Album" (
+	"genre_album_id" serial NOT NULL,
+	"genre_id" serial NOT NULL,
+	"album_id" serial NOT NULL,
+	CONSTRAINT "Genre-Album_pk" PRIMARY KEY ("genre_album_id")
+);
+
+CREATE TABLE "Track-Artist" (
+	"track_artist_id" serial NOT NULL,
+	"track_id" serial NOT NULL,
+	"artist_id" serial NOT NULL,
+	CONSTRAINT "Track-Artist_pk" PRIMARY KEY ("track_artist_id")
+);
+
+CREATE TABLE "Track-User-Block" (
+	"track_user_block_id" serial NOT NULL,
+	"track_id" integer NOT NULL,
+	"user_id" integer NOT NULL,
+	CONSTRAINT "Track-User-Block_pk" PRIMARY KEY ("track_user_block_id")
+);
+
+CREATE TABLE "Track-Tag" (
+	"track_tag_id" serial NOT NULL,
+	"track_id" serial NOT NULL,
+	"tag_id" serial NOT NULL,
+	CONSTRAINT "Track-Tag_pk" PRIMARY KEY ("track_tag_id")
+);
+
+CREATE TABLE "Track-User-Like" (
+	"track_user_like_id" serial NOT NULL,
+	"track_id" integer NOT NULL,
+	"user_id" integer NOT NULL,
+	CONSTRAINT "Track-User-Like_pk" PRIMARY KEY ("track_user_like_id")
+);
+
+CREATE TABLE "Track-User-Listen" (
+	"track_user_listen_id" serial NOT NULL,
+	"track_id" integer NOT NULL,
+	"user_id" integer NOT NULL,
+	"count" integer NOT NULL,
+	CONSTRAINT "Track-User-Listen_pk" PRIMARY KEY ("track_user_listen_id")
+);
+
+CREATE TABLE "Track-Playlist" (
+	"track_playlist_id" serial NOT NULL,
+	"track_id" serial NOT NULL,
+	"playlist_id" serial NOT NULL,
+	CONSTRAINT "Track-Playlist_pk" PRIMARY KEY ("track_playlist_id")
+);
+
+CREATE TABLE "Playlist-User" (
+	"playlist_user_id" serial NOT NULL,
+	"playlist_id" serial NOT NULL,
+	"user_id" serial NOT NULL,
+	CONSTRAINT "Playlist-User_pk" PRIMARY KEY ("playlist_user_id")
+);
+
+CREATE TABLE "Artist-User" (
+	"artist_user_id" serial NOT NULL,
+	"artist_id" serial NOT NULL,
+	"user_id" serial NOT NULL,
+	CONSTRAINT "Artist-User_pk" PRIMARY KEY ("artist_user_id")
+);
+
+CREATE TABLE "Genre-Artist" (
+	"genre_artist_id" serial NOT NULL,
+	"genre_id" serial NOT NULL,
+	"artist_id" serial NOT NULL,
+	CONSTRAINT "Genre-Artist_pk" PRIMARY KEY ("genre_artist_id")
+);
+
+CREATE TABLE "PodcastAlbum" (
+	"podcastalbum_id" serial NOT NULL,
+	"title" VARCHAR(255) NOT NULL,
+	"isExplicit" serial NOT NULL,
+	"coverUrl" VARCHAR(255) NOT NULL,
+	CONSTRAINT "PodcastAlbum_pk" PRIMARY KEY ("podcastalbum_id")
+);
+
+CREATE TABLE "Podcast" (
+	"podcast_id" serial NOT NULL,
+	"title" VARCHAR(255) NOT NULL,
+	"coverUrl" VARCHAR(255) NOT NULL,
+	"duration" serial NOT NULL,
+	"info" serial NOT NULL,
+	"url" VARCHAR(255) NOT NULL,
+	"isExplicit" serial NOT NULL,
+	CONSTRAINT "Podcast_pk" PRIMARY KEY ("podcast_id")
+);
+
+CREATE TABLE "PodcastPlaylist" (
+	"podcastplaylist_id" serial NOT NULL,
+	"title" VARCHAR(255) NOT NULL,
+	"coverUrl" VARCHAR(255) NOT NULL,
+	CONSTRAINT "PodcastPlaylist_pk" PRIMARY KEY ("podcastplaylist_id")
+);
+
+CREATE TABLE "User-Podcast-Listen" (
+	"user_podcast_id" serial NOT NULL,
+	"user_id" serial NOT NULL,
+	"podcast_id" serial NOT NULL,
+	CONSTRAINT "User-Podcast-Listen_pk" PRIMARY KEY ("user_podcast_id")
+);
+
+CREATE TABLE "User-PodcastAlbum" (
+	"user_podcastalbum_id" serial NOT NULL,
+	"podcastalbum_id" serial NOT NULL,
+	"user_id" serial NOT NULL,
+	CONSTRAINT "User-PodcastAlbum_pk" PRIMARY KEY ("user_podcastalbum_id")
+);
+
+CREATE TABLE "User-PodcastPlaylist" (
+	"user_podcastplaylist_id" serial NOT NULL,
+	"user_id" serial NOT NULL,
+	"podcastplaylist_id" serial NOT NULL,
+	CONSTRAINT "User-PodcastPlaylist_pk" PRIMARY KEY ("user_podcastplaylist_id")
+);
+
+CREATE TABLE "PodcastAlbum-Podcast" (
+	"podcast_podcastalbum_id" serial NOT NULL,
+	"podcastalbum_id" serial NOT NULL,
+	"podcast_id" serial NOT NULL,
+	CONSTRAINT "PodcastAlbum-Podcast_pk" PRIMARY KEY ("podcast_podcastalbum_id")
+);
+
+CREATE TABLE "PodcastPlaylist-Podcast" (
+	"podcastplaylist_podcast_id" serial NOT NULL,
+	"podcast_id" serial NOT NULL,
+	"podcastplaylist_id" serial NOT NULL,
+	CONSTRAINT "PodcastPlaylist-Podcast_pk" PRIMARY KEY ("podcastplaylist_podcast_id")
+);
+
+CREATE TABLE "User-Podcast-Like" (
+	"user_podcast_id" serial NOT NULL,
+	"user_id" serial NOT NULL,
+	"podcast_id" serial NOT NULL,
+	CONSTRAINT "User-Podcast-Like_pk" PRIMARY KEY ("user_podcast_id")
+);
+
+
+ALTER TABLE "Playlist" ADD CONSTRAINT "Playlist_fk0" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+
+ALTER TABLE "Link" ADD CONSTRAINT "Link_fk0" FOREIGN KEY ("artist_id") REFERENCES "Artist"("artist_id");
+
+ALTER TABLE "Album-Track" ADD CONSTRAINT "Album-Track_fk0" FOREIGN KEY ("album_id") REFERENCES "Album"("album_id");
+ALTER TABLE "Album-Track" ADD CONSTRAINT "Album-Track_fk1" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+
+ALTER TABLE "Album-User" ADD CONSTRAINT "Album-User_fk0" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+ALTER TABLE "Album-User" ADD CONSTRAINT "Album-User_fk1" FOREIGN KEY ("album_id") REFERENCES "Album"("album_id");
+
+ALTER TABLE "Genre-Track" ADD CONSTRAINT "Genre-Track_fk0" FOREIGN KEY ("genre_id") REFERENCES "Genre"("genre_id");
+ALTER TABLE "Genre-Track" ADD CONSTRAINT "Genre-Track_fk1" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+
+ALTER TABLE "Genre-Album" ADD CONSTRAINT "Genre-Album_fk0" FOREIGN KEY ("genre_id") REFERENCES "Genre"("genre_id");
+ALTER TABLE "Genre-Album" ADD CONSTRAINT "Genre-Album_fk1" FOREIGN KEY ("album_id") REFERENCES "Album"("album_id");
+
+ALTER TABLE "Track-Artist" ADD CONSTRAINT "Track-Artist_fk0" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+ALTER TABLE "Track-Artist" ADD CONSTRAINT "Track-Artist_fk1" FOREIGN KEY ("artist_id") REFERENCES "Artist"("artist_id");
+
+ALTER TABLE "Track-User-Block" ADD CONSTRAINT "Track-User-Block_fk0" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+ALTER TABLE "Track-User-Block" ADD CONSTRAINT "Track-User-Block_fk1" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+
+ALTER TABLE "Track-Tag" ADD CONSTRAINT "Track-Tag_fk0" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+ALTER TABLE "Track-Tag" ADD CONSTRAINT "Track-Tag_fk1" FOREIGN KEY ("tag_id") REFERENCES "Tag"("tag_id");
+
+ALTER TABLE "Track-User-Like" ADD CONSTRAINT "Track-User-Like_fk0" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+ALTER TABLE "Track-User-Like" ADD CONSTRAINT "Track-User-Like_fk1" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+
+ALTER TABLE "Track-User-Listen" ADD CONSTRAINT "Track-User-Listen_fk0" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+ALTER TABLE "Track-User-Listen" ADD CONSTRAINT "Track-User-Listen_fk1" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+
+ALTER TABLE "Track-Playlist" ADD CONSTRAINT "Track-Playlist_fk0" FOREIGN KEY ("track_id") REFERENCES "Track"("track_id");
+ALTER TABLE "Track-Playlist" ADD CONSTRAINT "Track-Playlist_fk1" FOREIGN KEY ("playlist_id") REFERENCES "Playlist"("playlist_id");
+
+ALTER TABLE "Playlist-User" ADD CONSTRAINT "Playlist-User_fk0" FOREIGN KEY ("playlist_id") REFERENCES "Playlist"("playlist_id");
+ALTER TABLE "Playlist-User" ADD CONSTRAINT "Playlist-User_fk1" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+
+ALTER TABLE "Artist-User" ADD CONSTRAINT "Artist-User_fk0" FOREIGN KEY ("artist_id") REFERENCES "Artist"("artist_id");
+ALTER TABLE "Artist-User" ADD CONSTRAINT "Artist-User_fk1" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+
+ALTER TABLE "Genre-Artist" ADD CONSTRAINT "Genre-Artist_fk0" FOREIGN KEY ("genre_id") REFERENCES "Genre"("genre_id");
+ALTER TABLE "Genre-Artist" ADD CONSTRAINT "Genre-Artist_fk1" FOREIGN KEY ("artist_id") REFERENCES "Artist"("artist_id");
+
+ALTER TABLE "User-Podcast-Listen" ADD CONSTRAINT "User-Podcast-Listen_fk0" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+ALTER TABLE "User-Podcast-Listen" ADD CONSTRAINT "User-Podcast-Listen_fk1" FOREIGN KEY ("podcast_id") REFERENCES "Podcast"("podcast_id");
+
+ALTER TABLE "User-PodcastAlbum" ADD CONSTRAINT "User-PodcastAlbum_fk0" FOREIGN KEY ("podcastalbum_id") REFERENCES "PodcastAlbum"("podcastalbum_id");
+ALTER TABLE "User-PodcastAlbum" ADD CONSTRAINT "User-PodcastAlbum_fk1" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+
+ALTER TABLE "User-PodcastPlaylist" ADD CONSTRAINT "User-PodcastPlaylist_fk0" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+ALTER TABLE "User-PodcastPlaylist" ADD CONSTRAINT "User-PodcastPlaylist_fk1" FOREIGN KEY ("podcastplaylist_id") REFERENCES "PodcastPlaylist"("podcastplaylist_id");
+
+ALTER TABLE "PodcastAlbum-Podcast" ADD CONSTRAINT "PodcastAlbum-Podcast_fk0" FOREIGN KEY ("podcastalbum_id") REFERENCES "PodcastAlbum"("podcastalbum_id");
+ALTER TABLE "PodcastAlbum-Podcast" ADD CONSTRAINT "PodcastAlbum-Podcast_fk1" FOREIGN KEY ("podcast_id") REFERENCES "Podcast"("podcast_id");
+
+ALTER TABLE "PodcastPlaylist-Podcast" ADD CONSTRAINT "PodcastPlaylist-Podcast_fk0" FOREIGN KEY ("podcast_id") REFERENCES "Podcast"("podcast_id");
+ALTER TABLE "PodcastPlaylist-Podcast" ADD CONSTRAINT "PodcastPlaylist-Podcast_fk1" FOREIGN KEY ("podcastplaylist_id") REFERENCES "PodcastPlaylist"("podcastplaylist_id");
+
+ALTER TABLE "User-Podcast-Like" ADD CONSTRAINT "User-Podcast-Like_fk0" FOREIGN KEY ("user_id") REFERENCES "User"("user_id");
+ALTER TABLE "User-Podcast-Like" ADD CONSTRAINT "User-Podcast-Like_fk1" FOREIGN KEY ("podcast_id") REFERENCES "Podcast"("podcast_id");
